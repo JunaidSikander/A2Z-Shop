@@ -8,12 +8,15 @@
     "start": "node backend/server",
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"yarn run server\" \" yarn run client\""
+    "dev": "concurrently \"yarn run server\" \" yarn run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d"
   },
   "repository": "https://github.com/JunaidSikander/A2Z-Shop.git",
   "author": "Junaid SIkander Hakro <Junaid_sikander@live.com>",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.11.8"
