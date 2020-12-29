@@ -12,8 +12,10 @@ productRouter.get('/', asyncHandler(async (req, res) => {
 
     if (products)
         res.json(products);
-    else
-        res.status(404).json({message: 'Product not found'})
+    else {
+        res.status(404);
+        throw new Error('Product not found')
+    }
 }));
 
 //@desc     Fetch single product
