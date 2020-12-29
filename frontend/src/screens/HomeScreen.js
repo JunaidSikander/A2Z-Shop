@@ -4,7 +4,7 @@ import Product from '../components/Product'
 import axios from "axios";
 
 const HomeScreen = () => {
-    const [products, setProducts] = useState({});
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
         const fetchProducts = async () => {
