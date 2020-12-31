@@ -2,14 +2,13 @@ import React, {useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Card, Col, Form, Image, ListGroup, Row} from 'react-bootstrap'
-import {addToCart} from "../redux/actions/cartActions";
+import {addToCart, removeFromCart} from "../redux/actions/cartActions";
 import Message from '../components/Message'
 
 const CartScreen = ({match, location, history}) => {
     const productId = match.params.id;
 
     const qty = location.search ? Number(location.search.split('=')[1]) : 1;
-
     const dispatch = useDispatch();
 
     const cart = useSelector(state => state.cart);
@@ -20,8 +19,8 @@ const CartScreen = ({match, location, history}) => {
             dispatch(addToCart(productId, qty))
     }, [dispatch, productId, qty]);
 
-    const removeFromCart = (id) => {
-        console.log(id)
+    const removeFromCartHandler = (id) => {
+        dispatch(removeFromCart(id));
     };
 
     const checkoutHandler = () => {
@@ -61,7 +60,7 @@ const CartScreen = ({match, location, history}) => {
                                             </Col>
                                             <Col md={2}>
                                                 <Button type='button' variant='light'
-                                                        onChange={() => removeFromCart(item.product)}>
+                                                        onClick={() => removeFromCartHandler(item.product)}>
                                                     <i className='fas fa-trash'/>
                                                 </Button>
                                             </Col>
