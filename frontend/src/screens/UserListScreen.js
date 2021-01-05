@@ -6,17 +6,21 @@ import {listUsers} from "../redux/actions/userActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
-const UserListScreen = () => {
+const UserListScreen = ({ history }) => {
     const dispatch = useDispatch();
 
     const usersList = useSelector(state => state.usersList);
     const {loading, error, users} = usersList;
 
-    console.log(users);
+    const userLogin = useSelector(state => state.userLogin);
+    const {userInfo} = userLogin;
 
     useEffect(() => {
-        dispatch(listUsers())
-    }, [dispatch]);
+        if(userInfo && userInfo.isAdmin)
+            dispatch(listUsers());
+        else
+            history.push('/login');
+    }, [dispatch, userInfo, history]);
 
     const deleteHandler = () => {
         console.log('Delete Handler');
