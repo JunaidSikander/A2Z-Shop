@@ -1,5 +1,12 @@
 import express from 'express'
-import {authUser, getAllUsers, getUserProfile, registerUser, updateUserProfile} from "../controllers/userController.js";
+import {
+    authUser,
+    deleteUser,
+    getAllUsers,
+    getUserProfile,
+    registerUser,
+    updateUserProfile
+} from "../controllers/userController.js";
 import {admin, protect} from "../middlewares/authMiddleware.js";
 
 
@@ -14,5 +21,7 @@ userRouter
     .route('/profile')
     .get(protect, getUserProfile)
     .put(protect, updateUserProfile);
+
+userRouter.route('/:id').delete(protect, admin, deleteUser);
 
 export default userRouter;
