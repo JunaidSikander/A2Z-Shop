@@ -37,7 +37,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 //@desc     create Product
 //@route    POST /api/products
 //@access   Private/Admin
-const createproduct = asyncHandler(async (req, res) => {
+const createProduct = asyncHandler(async (req, res) => {
     const product = new Product({
         name: 'Sample name',
         price: 0,
@@ -80,4 +80,4 @@ const updateProduct = asyncHandler(async (req, res) => {
     res.status(201).json(updatedProduct);
 
 });
-export {getProducts, getProductById, deleteProduct, createproduct, updateProduct}
+export {getProducts, getProductById, deleteProduct, createProduct, updateProduct}
