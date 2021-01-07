@@ -20,7 +20,7 @@ import {
 } from "../constants/orderConstants";
 
 
-export const orderCreateReducers = (state = {order: {}}, action) => {
+export const orderCreateReducers = (state = { }, action) => {
     switch (action.type) {
         case ORDER_CREATE_REQUEST:
             return {
