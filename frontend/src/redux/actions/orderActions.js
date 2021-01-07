@@ -2,6 +2,9 @@ import {
     ORDER_CREATE_FAIL,
     ORDER_CREATE_REQUEST,
     ORDER_CREATE_SUCCESS,
+    ORDER_DELIVERED_FAIL,
+    ORDER_DELIVERED_REQUEST,
+    ORDER_DELIVERED_SUCCESS,
     ORDER_DETAILS_FAIL,
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
@@ -87,7 +90,7 @@ export const payOrder = (orderId, paymentResult) => async (dispatch, getState) =
             },
         };
 
-        const {data} = await axios.put(`/api/order/${orderId}`, paymentResult, config);
+        const {data} = await axios.put(`/api/order/${orderId}/pay`, paymentResult, config);
 
         dispatch({
             type: ORDER_PAY_SUCCESS,
@@ -153,6 +156,34 @@ export const listOrders = () => async (dispatch, getState) => {
     } catch (e) {
         dispatch({
             type: ORDER_LIST_FAIL,
+            payload: e.response && e.response.data.message ?
+                e.response.data.message : e.message
+        })
+    }
+};
+
+export const delivereOrder = (order) => async (dispatch, getState) => {
+    try {
+        dispatch({type: ORDER_DELIVERED_REQUEST});
+
+        const {userLogin: {userInfo}} = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            },
+        };
+
+        const {data} = await axios.put(`/api/order/${order._id}/delivered`, {}, config);
+
+        dispatch({
+            type: ORDER_DELIVERED_SUCCESS,
+            payload: data
+        })
+
+    } catch (e) {
+        dispatch({
+            type: ORDER_DELIVERED_FAIL,
             payload: e.response && e.response.data.message ?
                 e.response.data.message : e.message
         })
