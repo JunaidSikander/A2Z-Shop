@@ -10,7 +10,10 @@ import {
     PRODUCT_DETAILS_SUCCESS,
     PRODUCT_LIST_FAIL,
     PRODUCT_LIST_REQUEST,
-    PRODUCT_LIST_SUCCESS
+    PRODUCT_LIST_SUCCESS,
+    PRODUCT_UPDATE_FAIL,
+    PRODUCT_UPDATE_REQUEST,
+    PRODUCT_UPDATE_SUCCESS
 } from '../constants/productContants';
 import axios from "axios";
 
@@ -91,7 +94,7 @@ export const createProduct = () => async (dispatch, getState) => {
             }
         };
 
-        const {data} = await axios.post('/api/products', {} ,config);
+        const {data} = await axios.post('/api/products', {}, config);
         console.log(data);
 
         dispatch({
@@ -102,6 +105,36 @@ export const createProduct = () => async (dispatch, getState) => {
     } catch (e) {
         dispatch({
             type: PRODUCT_CREATE_FAIL,
+            payload: e.response && e.response.data.message ?
+                e.response.data.message : e.message
+        })
+    }
+};
+
+export const updateProduct = (product) => async (dispatch, getState) => {
+    try {
+        dispatch({type: PRODUCT_UPDATE_REQUEST});
+
+        const {userLogin: {userInfo}} = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        };
+
+        const {data} = await axios.put(`/api/products/${product._id}`, product, config);
+        console.log("------->", data);
+
+        dispatch({
+            type: PRODUCT_UPDATE_SUCCESS,
+            payload: data
+        })
+
+    } catch (e) {
+        dispatch({
+            type: PRODUCT_UPDATE_FAIL,
             payload: e.response && e.response.data.message ?
                 e.response.data.message : e.message
         })
