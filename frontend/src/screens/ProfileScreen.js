@@ -96,6 +96,7 @@ const ProfileScreen = ({history, location}) => {
                             <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>DATE</th>
                                 <th>TOTAL</th>
                                 <th>PAID</th>
                                 <th>DELIVERED</th>
@@ -106,6 +107,7 @@ const ProfileScreen = ({history, location}) => {
                             {orders.map(order => (
                                 <tr key={order._id}>
                                     <td>{order._id}</td>
+                                    <td>{order.createdAt.substring(0, 10)} </td>
                                     <td>{order.totalPrice}</td>
                                     <td>{order.isPaid ? order.isPaid.substring(0, 10) : (
                                         <i className="fa fa-times" style={{color: 'red'}}/>
