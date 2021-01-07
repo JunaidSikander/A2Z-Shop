@@ -95,7 +95,6 @@ export const createProduct = () => async (dispatch, getState) => {
         };
 
         const {data} = await axios.post('/api/products', {}, config);
-        console.log(data);
 
         dispatch({
             type: PRODUCT_CREATE_SUCCESS,
@@ -125,7 +124,6 @@ export const updateProduct = (product) => async (dispatch, getState) => {
         };
 
         const {data} = await axios.put(`/api/products/${product._id}`, product, config);
-        console.log("------->", data);
 
         dispatch({
             type: PRODUCT_UPDATE_SUCCESS,
